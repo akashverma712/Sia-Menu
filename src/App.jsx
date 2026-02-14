@@ -326,89 +326,78 @@ Rice: [
 ],
 };
 
-export default function App() {
+export default function App({ menuData }) {
   const categories = Object.keys(menuData);
   const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   return (
-    <div className="min-h-screen bg-[#fffaf5]">
-
-      <section className="py-24 bg-gradient-to-br from-[#7c2d12] via-[#9a3412] to-[#7c2d12] text-center">
-        
-        <p className="text-[12px] tracking-[0.45em] uppercase text-orange-200 mb-6">
+    <div className="min-h-screen bg-[#9a2f0b]">
+      {/* HEADER */}
+      <header className="py-20 flex flex-col items-center">
+        <h1 className="text-3xl md:text-4xl font-extrabold tracking-[0.4em] text-[#facc15] uppercase mb-2">
           Menu Card
-        </p>
-
+        </h1>
         <img
           src="/sia.png"
-          alt="SIA Logo"
-          className="
-            mx-auto 
-            h-40 md:h-52 
-            object-contain
-            drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]
-          "
+          alt="SIA"
+          className="h-28 md:h-36 object-contain drop-shadow-2xl"
         />
+      </header>
 
-        <div className="mt-16 flex flex-wrap justify-center gap-4 max-w-6xl mx-auto px-6">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-7 py-2 rounded-full text-[11px] font-extrabold uppercase tracking-[0.25em]
-                transition-all duration-300
-                ${
-                  activeCategory === cat
-                    ? "bg-orange-600 text-white shadow-xl scale-105"
-                    : "bg-orange-100/90 text-[#7c2d12] hover:bg-orange-200"
-                }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </section>
+      {/* CATEGORY BUTTONS */}
+      <div className="flex flex-wrap justify-center gap-3 px-4 mb-12">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest transition
+              ${
+                activeCategory === cat
+                  ? "bg-orange-600 text-white shadow-lg"
+                  : "bg-[#f3e2d8] text-[#7c2d12] hover:bg-orange-200"
+              }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-      <main className="max-w-6xl mx-auto px-6 py-24">
+      {/* WHITE MENU CARD */}
+      <div className="flex justify-center px-4 pb-24">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.45, ease: "easeInOut" }}
-            className="
-              bg-white/90 backdrop-blur-xl
-              rounded-[2.5rem]
-              shadow-[0_40px_120px_-25px_rgba(0,0,0,0.35)]
-              px-10 md:px-16 py-20
-            "
+            transition={{ duration: 0.4 }}
+            className="w-full max-w-3xl bg-white rounded-[2.5rem] px-8 md:px-12 py-14 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.4)]"
           >
-            <div className="flex items-center gap-6 mb-16">
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
-              <h2 className="text-lg md:text-xl font-extrabold uppercase tracking-[0.45em] text-[#7c2d12]">
-                {activeCategory}
-              </h2>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent" />
-            </div>
+            {/* CATEGORY TITLE */}
+            <h2 className="text-center text-sm font-extrabold tracking-[0.45em] text-[#7c2d12] mb-12 uppercase">
+              {activeCategory}
+            </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-24">
+            {/* ITEMS */}
+            <div className="flex flex-col gap-6">
               {menuData[activeCategory].map((item, index) => (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.04 }}
-                  className="flex justify-between items-end py-5"
+                  transition={{ delay: index * 0.03 }}
+                  className="flex items-center gap-3"
                 >
-                  <div className="flex-1 flex items-baseline">
-                    <span className="text-sm font-semibold uppercase tracking-wide text-slate-800">
-                      {item.name}
-                    </span>
-                    <div className="flex-1 mx-4 border-b border-dotted border-slate-300" />
-                  </div>
+                  {/* NAME */}
+                  <span className="text-sm font-semibold uppercase tracking-wide text-slate-800 whitespace-nowrap">
+                    {item.name}
+                  </span>
 
-                  <span className="text-sm font-bold text-[#7c2d12] bg-orange-100 px-5 py-1.5 rounded-full">
+                  {/* DOTTED LINE (FIXED) */}
+                  <span className="flex-1 border-b border-dotted border-slate-300 min-w-0" />
+
+                  {/* PRICE */}
+                  <span className="shrink-0 min-w-[90px] text-center text-sm font-bold text-[#7c2d12] bg-orange-100 px-4 py-1 rounded-full">
                     {item.price}
                   </span>
                 </motion.div>
@@ -416,7 +405,7 @@ export default function App() {
             </div>
           </motion.div>
         </AnimatePresence>
-      </main>
+      </div>
     </div>
   );
 }

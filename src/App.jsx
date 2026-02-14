@@ -34,16 +34,16 @@ const menuData = {
   
 
   Bread: [
-    { id: 17, name: "Tandoori Roti", price: "₹25 (Plain) / ₹30 (Butter)" },
-    { id: 18, name: "Butter Naan", price: "₹50" },
-    { id: 19, name: "Masala Kulcha", price: "₹60 (Plain) / ₹65 (Butter) / ₹70 (Stuffed)" },
-    { id: 20, name: "Garlic Naan", price: "₹60" },
-    { id: 21, name: "Missi Roti", price: "₹50" },
-    { id: 22, name: "Paneer Paratha (2 pcs)", price: "₹140" },
-    { id: 23, name: "Aloo Paratha", price: "₹60" },
-    { id: 24, name: "Lachha Paratha", price: "₹50" },
-    { id: 25, name: "Tawa Roti", price: "₹15 (Plain) / ₹20 (Butter)" },
-    { id: 26, name: "Roomali Roti", price: "₹60 (Plain) / ₹70 (Butter)" },
+    { id: 17, name: "Tandoori Roti", price: "25 (Plain) / 30 (Butter)" },
+    { id: 18, name: "Butter Naan", price: "50" },
+    { id: 19, name: "Masala Kulcha", price: "60 (Plain) / 65 (Butter) / 70 (Stuffed)" },
+    { id: 20, name: "Garlic Naan", price: "60" },
+    { id: 21, name: "Missi Roti", price: "50" },
+    { id: 22, name: "Paneer Paratha (2 pcs)", price: "140" },
+    { id: 23, name: "Aloo Paratha", price: "60" },
+    { id: 24, name: "Lachha Paratha", price: "50" },
+    { id: 25, name: "Tawa Roti", price: "15 (Plain) / 20 (Butter)" },
+    { id: 26, name: "Roomali Roti", price: "60 (Plain) / 70 (Butter)" },
   ],
 
 
@@ -326,86 +326,102 @@ Rice: [
 ],
 };
 
-export default function App({ menuData }) {
+
+const formatPrice = (price) => {
+  if (typeof price === "number") return `₹${price}/-`;
+
+  return price.replace(/(\d+)/g, "₹$1/-");
+};
+
+export default function App() {
   const categories = Object.keys(menuData);
   const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   return (
-    <div className="min-h-screen bg-[#9a2f0b]">
-      {/* HEADER */}
-      <header className="py-20 flex flex-col items-center">
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-[0.4em] text-[#facc15] uppercase mb-2">
+    <div className="min-h-screen bg-[#fffaf5] overflow-x-hidden">
+
+      <section className="py-20 bg-gradient-to-br from-[#7c2d12] via-[#9a3412] to-[#7c2d12] text-center px-4">
+        <p className="text-[11px] tracking-[0.45em] uppercase text-orange-200 mb-6">
           Menu Card
-        </h1>
+        </p>
+
         <img
           src="/sia.png"
-          alt="SIA"
-          className="h-28 md:h-36 object-contain drop-shadow-2xl"
+          alt="SIA Logo"
+          className="mx-auto h-36 sm:h-44 md:h-52 object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]"
         />
-      </header>
 
-      {/* CATEGORY BUTTONS */}
-      <div className="flex flex-wrap justify-center gap-3 px-4 mb-12">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-6 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest transition
-              ${
-                activeCategory === cat
-                  ? "bg-orange-600 text-white shadow-lg"
-                  : "bg-[#f3e2d8] text-[#7c2d12] hover:bg-orange-200"
-              }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+        <div className="mt-12 flex flex-wrap justify-center gap-3 max-w-6xl mx-auto">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-5 py-2 rounded-full text-[10px] sm:text-[11px]
+                font-extrabold uppercase tracking-[0.25em] transition-all
+                ${
+                  activeCategory === cat
+                    ? "bg-orange-600 text-white shadow-xl scale-105"
+                    : "bg-orange-100 text-[#7c2d12] hover:bg-orange-200"
+                }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+      </section>
 
-      {/* WHITE MENU CARD */}
-      <div className="flex justify-center px-4 pb-24">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
-            className="w-full max-w-3xl bg-white rounded-[2.5rem] px-8 md:px-12 py-14 shadow-[0_40px_90px_-30px_rgba(0,0,0,0.4)]"
+            className="bg-white/95 rounded-[2.5rem]
+              shadow-[0_40px_120px_-25px_rgba(0,0,0,0.35)]
+              px-6 sm:px-10 md:px-16 py-16"
           >
-            {/* CATEGORY TITLE */}
-            <h2 className="text-center text-sm font-extrabold tracking-[0.45em] text-[#7c2d12] mb-12 uppercase">
-              {activeCategory}
-            </h2>
+            <div className="flex items-center gap-4 mb-12">
+              <div className="flex-1 h-px bg-orange-300" />
+              <h2 className="text-sm sm:text-lg font-extrabold uppercase tracking-[0.35em] text-[#7c2d12] text-center">
+                {activeCategory}
+              </h2>
+              <div className="flex-1 h-px bg-orange-300" />
+            </div>
 
-            {/* ITEMS */}
-            <div className="flex flex-col gap-6">
+=            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16">
               {menuData[activeCategory].map((item, index) => (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.03 }}
-                  className="flex items-center gap-3"
+                  transition={{ delay: index * 0.025 }}
+                  className="flex items-end gap-3 py-4"
                 >
-                  {/* NAME */}
-                  <span className="text-sm font-semibold uppercase tracking-wide text-slate-800 whitespace-nowrap">
-                    {item.name}
-                  </span>
+                  {/* NAME + DOTTED LINE */}
+                  <div className="flex min-w-0 flex-1 items-baseline gap-3">
+                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-wide text-slate-800">
+                      {item.name}
+                    </span>
+                    <div className="flex-1 border-b border-dotted border-slate-300" />
+                  </div>
 
-                  {/* DOTTED LINE (FIXED) */}
-                  <span className="flex-1 border-b border-dotted border-slate-300 min-w-0" />
-
-                  {/* PRICE */}
-                  <span className="shrink-0 min-w-[90px] text-center text-sm font-bold text-[#7c2d12] bg-orange-100 px-4 py-1 rounded-full">
-                    {item.price}
+                  <span
+                    className="
+                      text-xs sm:text-sm font-bold text-[#7c2d12]
+                      bg-orange-100 px-4 py-1.5 rounded-full
+                      whitespace-nowrap shrink-0 max-w-full
+                    "
+                  >
+                    {formatPrice(item.price)}
                   </span>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </AnimatePresence>
-      </div>
+      </main>
     </div>
   );
 }
